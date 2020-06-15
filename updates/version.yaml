@@ -1,0 +1,10 @@
+1.0.1:
+    - ' First version of Lp'
+    - create_log_states_table.php
+    - create_source_logs_table.php
+1.0.2:
+    - ' Ajout des données dans wakamail'
+    - create_waka_mails_table_u102.php
+1.0.3:
+    - ' Ajout des données dans wakamailto'
+    - create_waka_mailtos_table_U103.php

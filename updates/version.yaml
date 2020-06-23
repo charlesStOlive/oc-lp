@@ -4,7 +4,7 @@
     - create_source_logs_table.php
 1.0.2:
     - ' Ajout des données dans wakamail'
-    - create_waka_mails_table_u102.php
+    - add_waka_mails_table_u102.php
 1.0.3:
     - ' Ajout des données dans wakamailto'
-    - create_waka_mailtos_table_U103.php
+    - add_waka_mailtos_table_U103.php

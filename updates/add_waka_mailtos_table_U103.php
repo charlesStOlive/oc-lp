@@ -4,7 +4,7 @@ use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
 use Schema;
 
-class CreateWakaMailtosTableU103 extends Migration
+class AddWakaMailtosTableU103 extends Migration
 {
     public function up()
     {

@@ -14,6 +14,12 @@ use Waka\Mailtoer\Models\WakaMailto as WakaMailtoModel;
  */
 class Plugin extends PluginBase
 {
+    public $require = [
+        'Rainlab.User',
+        'Waka.Cloudis',
+        'Waka.Mailer',
+        'Waka.Mailtoer',
+    ];
     /**
      * Returns information about this plugin.
      *

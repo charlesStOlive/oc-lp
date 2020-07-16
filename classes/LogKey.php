@@ -62,7 +62,7 @@ class LogKey
     {
 
         $date = Carbon::now();
-        trace_log($date);
+        //trace_log($date);
         switch ($duration) {
             case '5m':
                 return $date->addMinutes(5)->toDateTimeString();

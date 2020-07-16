@@ -27,7 +27,7 @@ class UserKey extends ComponentBase
 
     public function onRun()
     {
-        trace_log('fuck');
+
         $key = $this->param('key');
         $source = SourceLog::where('key', $key)->first();
 

@@ -90,7 +90,7 @@ class SourceLog extends Model
     public function getEndKeyAtZoneAttribute()
     {
         $backendTimeZone = \Backend\Models\Preference::get('timezone');
-        trace_log($backendTimeZone);
+        //trace_log($backendTimeZone);
         $val = $this->end_key_at->setTimezone($backendTimeZone);
         return $val;
     }

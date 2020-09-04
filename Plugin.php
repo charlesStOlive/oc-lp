@@ -72,6 +72,9 @@ class Plugin extends PluginBase
                     if ($widget->alias == 'mailBehaviorformWidget') {
                         return;
                     }
+                    if ($widget->alias == 'myduplicateformWidget') {
+                        return;
+                    }
                     if ($widget->alias == 'mailDataformWidget') {
                         return;
                     }

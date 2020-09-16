@@ -83,7 +83,7 @@ class Plugin extends PluginBase
                             'label' => Lang::get('waka.lp::lang.source_log.use_key'),
                             'tab' => 'waka.lp::lang.source_log.tab_lp',
                             'span' => 'auto',
-                            'type' => 'checkbox',
+                            'type' => 'switch',
                         ],
                         'key_duration' => [
                             'label' => Lang::get('waka.lp::lang.source_log.duration'),

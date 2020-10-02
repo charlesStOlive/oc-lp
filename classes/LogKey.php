@@ -2,17 +2,18 @@
 
 use Carbon\Carbon;
 use Waka\Lp\Models\SourceLog;
+use Waka\Utils\Classes\DataSource;
 
 class LogKey
 {
     private $key;
-    public $dataSourceId;
+    public $modelId;
     public $prodModel;
     public $log;
 
-    public function __construct($dataSourceId, $prodModel)
+    public function __construct($modelId, $prodModel)
     {
-        $this->dataSourceId = $dataSourceId;
+        $this->modelId = $modelId;
         $this->prodModel = $prodModel;
         $logKeyExiste = $this->existe();
         if ($logKeyExiste) {
@@ -30,8 +31,9 @@ class LogKey
 
     public function existe()
     {
-        return SourceLog::where('send_targeteable_id', $this->dataSourceId)
-            ->where('send_targeteable_type', $this->prodModel->data_source->modelClass)
+        $ds = new DataSource($this->prodModel->data_source_id, 'id');
+        return SourceLog::where('send_targeteable_id', $this->modelId)
+            ->where('send_targeteable_type', $ds->class)
             ->where('sendeable_type', get_class($this->prodModel))
             ->where('sendeable_id', $this->prodModel->id)
             ->where('user_delete_key', false)->get()->first();
@@ -47,10 +49,11 @@ class LogKey
             $log->save();
             $this->log = $log;
         } else {
+            $ds = new DataSource($this->prodModel->data_source_id, 'id');
             $log = new \Waka\Lp\Models\SourceLog();
             $log->key = $this->key;
-            $log->send_targeteable_id = $this->dataSourceId;
-            $log->send_targeteable_type = $this->prodModel->data_source->modelClass;
+            $log->send_targeteable_id = $this->modelId;
+            $log->send_targeteable_type = $ds->class;
             $log->datas = $datas;
             $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);
             $this->prodModel->sends()->add($log);

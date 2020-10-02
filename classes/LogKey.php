@@ -6,13 +6,13 @@ use Waka\Lp\Models\SourceLog;
 class LogKey
 {
     private $key;
-    public $dataSourceId;
+    public $modelId;
     public $prodModel;
     public $log;
 
-    public function __construct($dataSourceId, $prodModel)
+    public function __construct($modelId, $prodModel)
     {
-        $this->dataSourceId = $dataSourceId;
+        $this->modelId = $modelId;
         $this->prodModel = $prodModel;
         $logKeyExiste = $this->existe();
         if ($logKeyExiste) {
@@ -30,7 +30,7 @@ class LogKey
 
     public function existe()
     {
-        return SourceLog::where('send_targeteable_id', $this->dataSourceId)
+        return SourceLog::where('send_targeteable_id', $this->modelId)
             ->where('send_targeteable_type', $this->prodModel->data_source->modelClass)
             ->where('sendeable_type', get_class($this->prodModel))
             ->where('sendeable_id', $this->prodModel->id)
@@ -49,7 +49,7 @@ class LogKey
         } else {
             $log = new \Waka\Lp\Models\SourceLog();
             $log->key = $this->key;
-            $log->send_targeteable_id = $this->dataSourceId;
+            $log->send_targeteable_id = $this->modelId;
             $log->send_targeteable_type = $this->prodModel->data_source->modelClass;
             $log->datas = $datas;
             $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);

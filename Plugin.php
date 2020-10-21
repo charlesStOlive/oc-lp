@@ -52,19 +52,38 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        WakaMailtoModel::extend(function ($model) {
-            $model->morphMany['sends'] = ['Waka\Lp\Models\SourceLog', 'name' => 'sendeable'];
-        });
-        WakaMailModel::extend(function ($model) {
-            $model->morphMany['sends'] = ['Waka\Lp\Models\SourceLog', 'name' => 'sendeable'];
-        });
+        $WakaMailsController =  'Waka\Mailer\Controllers\WakaMails';
+        $WakaMailModel =  'Waka\Mailer\Models\WakaMail as WakaMailModel';
+        $WakaMailTosController = 'Waka\Mailtoer\Controllers\WakaMailTos';
+        $WakaMailtoModel = 'Waka\Mailtoer\Models\WakaMailto';
+
+        if (class_exists($WakaMailModel)) {
+            $WakaMailModel::extend(function ($model) {
+                $model->morphMany['sends'] = ['Waka\Lp\Models\SourceLog', 'name' => 'sendeable'];
+            });
+        }
+        if (class_exists($WakaMailtoModel)) {
+            $WakaMailtoModel::extend(function ($model) {
+                $model->morphMany['sends'] = ['Waka\Lp\Models\SourceLog', 'name' => 'sendeable'];
+            });
+        }
 
         Event::listen('backend.form.extendFields', function ($widget) {
 
             // Only for the User controller
-            if ($widget->getController() instanceof WakaMailsController || $widget->getController() instanceof WakaMailTosController) {
-                if ($widget->model instanceof WakaMailModel || $widget->model instanceof WakaMailtoModel) {
-                    $opt = \Config::get('waka.lp::durations');
+            if ($widget->getController() instanceof $WakaMailsController || $widget->getController() instanceof $WakaMailTosController) {
+                if ($widget->model instanceof $WakaMailModel || $widget->model instanceof $WakaMailtoModel) {
+                    $this->injectController($widget);
+                }
+
+            }
+            
+        });
+
+    }
+
+    public function injectController($widget) {
+        $opt = \Config::get('waka.lp::durations');
                     if ($widget->isNested === true) {
                         return;
                     }
@@ -94,11 +113,7 @@ class Plugin extends PluginBase
                             'default' => '1w',
                         ],
                     ]);
-                }
-
-            }
-        });
-
+        
     }
 
     /**

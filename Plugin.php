@@ -4,10 +4,6 @@ use Backend;
 use Event;
 use Lang;
 use System\Classes\PluginBase;
-use Waka\Mailer\Controllers\WakaMails as WakaMailsController;
-use Waka\Mailer\Models\WakaMail as WakaMailModel;
-use Waka\Mailtoer\Controllers\WakaMailTos as WakaMailTosController;
-use Waka\Mailtoer\Models\WakaMailto as WakaMailtoModel;
 
 /**
  * Lp Plugin Information File
@@ -15,10 +11,8 @@ use Waka\Mailtoer\Models\WakaMailto as WakaMailtoModel;
 class Plugin extends PluginBase
 {
     public $require = [
-        'Rainlab.User',
-        'Waka.Cloudis',
+        'Waka.Utils',
         'Waka.Mailer',
-        'Waka.Mailtoer',
     ];
     /**
      * Returns information about this plugin.
@@ -52,8 +46,8 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        $WakaMailsController =  'Waka\Mailer\Controllers\WakaMails';
-        $WakaMailModel =  'Waka\Mailer\Models\WakaMail as WakaMailModel';
+        $WakaMailsController = 'Waka\Mailer\Controllers\WakaMails';
+        $WakaMailModel = 'Waka\Mailer\Models\WakaMail';
         $WakaMailTosController = 'Waka\Mailtoer\Controllers\WakaMailTos';
         $WakaMailtoModel = 'Waka\Mailtoer\Models\WakaMailto';
 
@@ -68,52 +62,63 @@ class Plugin extends PluginBase
             });
         }
 
-        Event::listen('backend.form.extendFields', function ($widget) {
+        Event::listen('backend.form.extendFields', function ($widget) use ($WakaMailModel, $WakaMailsController, $WakaMailtoModel, $WakaMailTosController) {
 
-            // Only for the User controller
-            if ($widget->getController() instanceof $WakaMailsController || $widget->getController() instanceof $WakaMailTosController) {
-                if ($widget->model instanceof $WakaMailModel || $widget->model instanceof $WakaMailtoModel) {
-                    $this->injectController($widget);
+            if (class_exists($WakaMailModel)) {
+                if ($widget->getController() instanceof $WakaMailsController) {
+                    if ($widget->model instanceof $WakaMailModel) {
+                        $this->injectController($widget);
+                    }
+
                 }
-
             }
-            
+
+            if (class_exists($WakaMailtoModel)) {
+                if ($widget->getController() instanceof $WakaMailTosController) {
+                    if ($widget->model instanceof $WakaMailtoModel) {
+                        $this->injectController($widget);
+                    }
+
+                }
+            }
+
         });
 
     }
 
-    public function injectController($widget) {
+    public function injectController($widget)
+    {
         $opt = \Config::get('waka.lp::durations');
-                    if ($widget->isNested === true) {
-                        return;
-                    }
-                    //On empeche l'affichage pour les sous widget des popups behaviors
-                    if ($widget->alias == 'mailBehaviorformWidget') {
-                        return;
-                    }
-                    if ($widget->alias == 'myduplicateformWidget') {
-                        return;
-                    }
-                    if ($widget->alias == 'mailDataformWidget') {
-                        return;
-                    }
-                    $widget->addTabFields([
-                        'use_key' => [
-                            'label' => Lang::get('waka.lp::lang.source_log.use_key'),
-                            'tab' => 'waka.lp::lang.source_log.tab_lp',
-                            'span' => 'auto',
-                            'type' => 'switch',
-                        ],
-                        'key_duration' => [
-                            'label' => Lang::get('waka.lp::lang.source_log.duration'),
-                            'tab' => 'waka.lp::lang.source_log.tab_lp',
-                            'span' => 'auto',
-                            'type' => 'dropdown',
-                            'options' => $opt,
-                            'default' => '1w',
-                        ],
-                    ]);
-        
+        if ($widget->isNested === true) {
+            return;
+        }
+        //On empeche l'affichage pour les sous widget des popups behaviors
+        if ($widget->alias == 'mailBehaviorformWidget') {
+            return;
+        }
+        if ($widget->alias == 'myduplicateformWidget') {
+            return;
+        }
+        if ($widget->alias == 'mailDataformWidget') {
+            return;
+        }
+        $widget->addTabFields([
+            'use_key' => [
+                'label' => Lang::get('waka.lp::lang.source_log.use_key'),
+                'tab' => 'waka.lp::lang.source_log.tab_lp',
+                'span' => 'auto',
+                'type' => 'switch',
+            ],
+            'key_duration' => [
+                'label' => Lang::get('waka.lp::lang.source_log.duration'),
+                'tab' => 'waka.lp::lang.source_log.tab_lp',
+                'span' => 'auto',
+                'type' => 'dropdown',
+                'options' => $opt,
+                'default' => '1w',
+            ],
+        ]);
+
     }
 
     /**

@@ -21,7 +21,7 @@ class AddWakaMailtosTableU103 extends Migration
 
     public function down()
     {
-        if (Schema::hasTable('waka_mailtoer_waka_mailtos')) {
+        if (Schema::hasColumn('waka_mailtoer_waka_mailtos', 'use_lp')) {
             Schema::table('waka_mailtoer_waka_mailtos', function (Blueprint $table) {
                 $table->dropColumn('use_lp');
                 $table->dropColumn('lp');

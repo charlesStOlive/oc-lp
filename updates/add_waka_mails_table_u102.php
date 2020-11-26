@@ -8,8 +8,8 @@ class AddWakaMailsTableU102 extends Migration
 {
     public function up()
     {
-        if (Schema::hasTable('waka_mailer_wakamails')) {
-            Schema::table('waka_mailer_wakamails', function (Blueprint $table) {
+        if (Schema::hasTable('waka_mailer_waka_mails')) {
+            Schema::table('waka_mailer_waka_mails', function (Blueprint $table) {
                 $table->boolean('use_lp')->nullable();
                 $table->string('lp')->nullable();
                 $table->boolean('use_key')->nullable();
@@ -22,8 +22,8 @@ class AddWakaMailsTableU102 extends Migration
 
     public function down()
     {
-        if (Schema::hasTable('waka_mailer_wakamails')) {
-            Schema::table('waka_mailer_wakamails', function (Blueprint $table) {
+        if (Schema::hasColumn('waka_mailer_waka_mails', 'use_lp')) {
+            Schema::table('waka_mailer_waka_mails', function (Blueprint $table) {
                 $table->dropColumn('use_lp');
                 $table->dropColumn('lp');
                 $table->dropColumn('use_key');

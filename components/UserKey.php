@@ -27,6 +27,7 @@ class UserKey extends ComponentBase
 
     public function onRun()
     {
+        $this->addJs('assets/js/waiter.js');
 
         $key = $this->param('key');
         $source = SourceLog::where('key', $key)->first();
@@ -51,6 +52,5 @@ class UserKey extends ComponentBase
         }
 
         $this->page['dataKey'] = $source->send_targeteable;
-        //$this->page['var'] = 'value'; // Inject some variable to the page
     }
 }

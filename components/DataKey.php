@@ -5,7 +5,7 @@ use Cms\Classes\ComponentBase;
 use Redirect;
 use Waka\Lp\Models\SourceLog;
 
-class UserKey extends ComponentBase
+class DataKey extends ComponentBase
 {
     public function componentDetails()
     {
@@ -18,11 +18,6 @@ class UserKey extends ComponentBase
     public function defineProperties()
     {
         return [];
-    }
-
-    public function datas()
-    {
-        return ['aa' => 'bb'];
     }
 
     public function onRun()

@@ -14,7 +14,14 @@ class GestionKey extends ComponentBase
 
     public function defineProperties()
     {
-        return [];
+        return [
+            'btn_color' => [
+                'title' => 'Couleur',
+                'description' => 'Couleur du bouton',
+                'default' => null,
+                'type' => 'string',
+            ],
+        ];
     }
 
     public function onRemoveKey()

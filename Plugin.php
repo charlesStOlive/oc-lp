@@ -130,7 +130,7 @@ class Plugin extends PluginBase
     {
         return [
             'Waka\Lp\Components\GestionKey' => 'gestionKey',
-            'Waka\Lp\Components\UserKey' => 'userKey',
+            'Waka\Lp\Components\DataKey' => 'dataKey',
         ];
     }
 

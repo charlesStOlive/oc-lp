@@ -11,10 +11,10 @@ class LogKey
     public $prodModel;
     public $log;
 
-    public function __construct($modelId, $prodModel)
+    public function __construct($productorModel)
     {
-        $this->modelId = $modelId;
-        $this->prodModel = $prodModel;
+        $this->modelId = $productorModel->modelId;
+        $this->prodModel = $productorModel->getProductor();
         $logKeyExiste = $this->existe();
         if ($logKeyExiste) {
             $this->key = $logKeyExiste->id;

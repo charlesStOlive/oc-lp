@@ -36,5 +36,4 @@ trait SourceLogTrait
     /**
      *
      */
-
 }

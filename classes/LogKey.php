@@ -21,7 +21,6 @@ class LogKey
         } else {
             $this->key = uniqid() . str_Random(8);
         }
-
     }
 
     public function getKey()
@@ -37,7 +36,6 @@ class LogKey
             ->where('sendeable_type', get_class($this->prodModel))
             ->where('sendeable_id', $this->prodModel->id)
             ->where('user_delete_key', false)->get()->first();
-
     }
 
     public function add($datas = [])
@@ -86,6 +84,5 @@ class LogKey
                 return $date->addMonth()->toDateTimeString();
                 break;
         }
-
     }
 }

@@ -36,7 +36,6 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
     }
 
     /**
@@ -69,7 +68,6 @@ class Plugin extends PluginBase
                     if ($widget->model instanceof $WakaMailModel) {
                         $this->injectController($widget);
                     }
-
                 }
             }
 
@@ -78,10 +76,8 @@ class Plugin extends PluginBase
                     if ($widget->model instanceof $WakaMailtoModel) {
                         $this->injectController($widget);
                     }
-
                 }
             }
-
         });
 
         //Cette evenement permet d'ajouter au données de l'email les informations sur une clef unique d'identification.
@@ -132,7 +128,6 @@ class Plugin extends PluginBase
                 'default' => '1w',
             ],
         ]);
-
     }
 
     /**

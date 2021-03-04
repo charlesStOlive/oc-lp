@@ -12,9 +12,11 @@ class CreateDatasourceLogsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('visites')->unsigned()->nullable();
-            $table->integer('sendeable_id')->unsigned()->nullable();;
+            $table->integer('sendeable_id')->unsigned()->nullable();
+            ;
             $table->string('sendeable_type')->nullable();
-            $table->integer('send_targeteable_id')->unsigned()->nullable();;
+            $table->integer('send_targeteable_id')->unsigned()->nullable();
+            ;
             $table->string('send_targeteable_type')->nullable();
             $table->text('events')->nullable();
             $table->text('datas')->nullable();

@@ -15,7 +15,6 @@ class AddWakaMailtosTableU103 extends Migration
                     $table->string('lp')->nullable();
                     $table->boolean('use_key')->nullable();
                     $table->string('key_duration')->nullable();
-
                 });
             }
         }

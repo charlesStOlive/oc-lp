@@ -84,7 +84,6 @@ class SourceLog extends Model
         } else {
             return true;
         }
-
     }
 
     public function getEndKeyAtZoneAttribute()

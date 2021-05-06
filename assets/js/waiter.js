@@ -1,6 +1,11 @@
 document.onreadystatechange = function () {
-    if (document.readyState !== "complete") {
+    if (document.isMy3DReady !== 'undefined') {
+        console.log('il y a une scène 3d')
+        //La fonction d'affichage se trouve dans le script babylon.js
     } else {
-        document.querySelector("#page_loader").style.visibility = "hidden";
+        if (document.readyState !== "complete") {
+        } else {
+            document.querySelector("#page_loader").style.visibility = "hidden";
+        }
     }
-}; 
+};

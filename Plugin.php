@@ -153,12 +153,18 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
-            'waka.lp.some_permission' => [
-                'tab' => 'Lp',
-                'label' => 'Some permission',
+            'waka.lp.admin.super' => [
+                'tab' => 'Waka - Landing Page',
+                'label' => 'Super Administrateur des Landing Page',
+            ],
+            'waka.lp.admin.base' => [
+                'tab' => 'Waka - Landing Page',
+                'label' => 'Administrateur des Landing Page',
+            ],
+            'waka.lp.user' => [
+                'tab' => 'Waka - Landing Page',
+                'label' => 'Utilisateur des Landing Page',
             ],
         ];
     }

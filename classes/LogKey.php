@@ -11,10 +11,23 @@ class LogKey
     public $prodModel;
     public $log;
 
-    public function __construct($productorModel)
+    public function __construct($productorModel, $modelId = null)
     {
-        $this->modelId = $productorModel->modelId;
-        $this->prodModel = $productorModel->getProductor();
+        if(!$modelId) {
+            //modelId par defaut est envoyé par les class productrices (Maier, Pdfer)
+            $this->modelId = $productorModel->modelId;
+            $this->prodModel = $productorModel->getProductor();
+        } else {
+            //Si création manuel d'un log key on instancie le model.
+            $this->modelId = $modelId;
+            $this->prodModel = $productorModel;
+            //On triche ici plutot que d'utilisr une class productrice on prend le modèle productor wakaMail plutot que Mailcreator...
+        }
+        if(!$this->modelId) {
+            throw new SystemException('Le modèle ID est inconnu lors de la création du logKey');
+        }
+        
+        
         $logKeyExiste = $this->existe();
         if ($logKeyExiste) {
             $this->key = $logKeyExiste->id;
@@ -26,6 +39,11 @@ class LogKey
     public function getKey()
     {
         return $this->key;
+    }
+
+    public function getLogKey()
+    {
+        return $this->log->key;
     }
 
     public function existe()
@@ -40,6 +58,13 @@ class LogKey
 
     public function add($datas = [])
     {
+        //trace_log("add fonction");
+        //trace_log($this->prodModel->data_source);
+        //trace_log($this->key);
+        //trace_log($datas);
+        //trace_log($this->getEndKeyAt($this->prodModel->key_duration));
+
+
         $logKeyExiste = $this->existe();
         if ($logKeyExiste) {
             $log = $logKeyExiste;

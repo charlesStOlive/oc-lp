@@ -112,6 +112,9 @@ class Plugin extends PluginBase
         if ($widget->alias == 'mailDataformWidget') {
             return;
         }
+        if ($widget->context == 'create') {
+            return;
+        }
         $widget->addTabFields([
             'use_key' => [
                 'label' => Lang::get('waka.lp::lang.source_log.use_key'),

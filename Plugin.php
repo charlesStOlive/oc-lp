@@ -112,6 +112,9 @@ class Plugin extends PluginBase
         if ($widget->alias == 'mailDataformWidget') {
             return;
         }
+        if ($widget->alias == 'sideBarUpdateformWidget') {
+            return;
+        }
         if ($widget->context == 'create') {
             return;
         }

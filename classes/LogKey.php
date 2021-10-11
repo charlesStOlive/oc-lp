@@ -48,7 +48,7 @@ class LogKey
 
     public function existe()
     {
-        $ds = new DataSource($this->prodModel->data_source);
+        $ds = \DataSources::find($this->prodModel->data_source);
         return SourceLog::where('send_targeteable_id', $this->modelId)
             ->where('send_targeteable_type', $ds->class)
             ->where('sendeable_type', get_class($this->prodModel))
@@ -72,7 +72,7 @@ class LogKey
             $log->save();
             $this->log = $log;
         } else {
-            $ds = new DataSource($this->prodModel->data_source);
+            $ds = \DataSources::find($this->prodModel->data_source);
             $log = new \Waka\Lp\Models\SourceLog();
             $log->key = $this->key;
             $log->send_targeteable_id = $this->modelId;

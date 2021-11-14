@@ -122,6 +122,7 @@ class Plugin extends PluginBase
             'use_key' => [
                 'label' => Lang::get('waka.lp::lang.source_log.use_key'),
                 'tab' => 'waka.lp::lang.source_log.tab_lp',
+                'permissions' => ['waka.mailer.admin.super'],
                 'span' => 'auto',
                 'type' => 'switch',
             ],
@@ -130,6 +131,7 @@ class Plugin extends PluginBase
                 'tab' => 'waka.lp::lang.source_log.tab_lp',
                 'span' => 'auto',
                 'type' => 'dropdown',
+                'permissions' => ['waka.mailer.admin.super'],
                 'options' => $opt,
                 'default' => '1w',
             ],

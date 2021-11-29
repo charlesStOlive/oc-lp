@@ -45,7 +45,7 @@ class DataKey extends ComponentBase
             $source->visites = $source->visites + 1;
             $source->save();
         }
-
+        $this->page['dataClientKey'] = $key;
         $this->page['dataKey'] = $source->send_targeteable;
     }
 }

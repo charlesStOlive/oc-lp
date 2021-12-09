@@ -43,7 +43,7 @@ class SourceLog extends Model
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
      */
-    protected $appends = [];
+    protected $appends = ['lp_url'];
 
     /**
      * @var array Attributes to be removed from the API representation of the model (ex. toArray())
@@ -92,5 +92,9 @@ class SourceLog extends Model
         //trace_log($backendTimeZone);
         $val = $this->end_key_at->setTimezone($backendTimeZone);
         return $val;
+    }
+
+    public function getLpUrlAttribute() {
+        return url('lp/'.$this->landing_page.'/'.$this->key);
     }
 }

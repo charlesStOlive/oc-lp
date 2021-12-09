@@ -88,6 +88,7 @@ class Plugin extends PluginBase
             if ($productor->getProductor()->use_key && $productor->getProductor()->key_duration && $productor->modelId) {
                 $logKey = new \Waka\Lp\Classes\LogKey($productor);
                 $logKey->add();
+               //trace_log($logKey->log->toArray());
                 return ['log' => $logKey->log];
             } else {
                 //trace_log('pas de log key');
@@ -134,6 +135,12 @@ class Plugin extends PluginBase
                 'permissions' => ['waka.mailer.admin.super'],
                 'options' => $opt,
                 'default' => '1w',
+            ],
+            'lp' => [
+                'label' => Lang::get('waka.lp::lang.source_log.lp'),
+                'tab' => 'waka.lp::lang.source_log.tab_lp',
+                'span' => 'full',
+                'permissions' => ['waka.mailer.admin.super'],
             ],
         ]);
     }

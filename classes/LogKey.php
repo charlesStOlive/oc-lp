@@ -10,6 +10,7 @@ class LogKey
     public $modelId;
     public $prodModel;
     public $log;
+    public $landingPage;
 
     public function __construct($productorModel, $modelId = null)
     {
@@ -28,9 +29,9 @@ class LogKey
         }
         
         
-        $logKeyExiste = $this->existe();
-        if ($logKeyExiste) {
-            $this->key = $logKeyExiste->id;
+        $existingLoadingKey = $this->existe();
+        if ($existingLoadingKey) {
+            $this->key = $existingLoadingKey->id;
         } else {
             $this->key = uniqid() . str_Random(8);
         }
@@ -39,6 +40,11 @@ class LogKey
     public function getKey()
     {
         return $this->key;
+    }
+
+    public function getLandingPage()
+    {
+        return $this->log->landingPage;
     }
 
     public function getLogKey()
@@ -53,6 +59,7 @@ class LogKey
             ->where('send_targeteable_type', $ds->class)
             ->where('sendeable_type', get_class($this->prodModel))
             ->where('sendeable_id', $this->prodModel->id)
+            ->where('landing_page', $this->prodModel->lp)
             ->where('user_delete_key', false)->get()->first();
     }
 
@@ -65,10 +72,13 @@ class LogKey
         //trace_log($this->getEndKeyAt($this->prodModel->key_duration));
 
 
-        $logKeyExiste = $this->existe();
-        if ($logKeyExiste) {
-            $log = $logKeyExiste;
+        $existingLoadingKey = $this->existe();
+        
+        if ($existingLoadingKey) {
+           //trace_log($existingLoadingKey->toArray());
+            $log = $existingLoadingKey;
             $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);
+            $log->landing_page = $this->prodModel->lp;
             $log->save();
             $this->log = $log;
         } else {
@@ -77,6 +87,7 @@ class LogKey
             $log->key = $this->key;
             $log->send_targeteable_id = $this->modelId;
             $log->send_targeteable_type = $ds->class;
+            $log->landing_page = $this->prodModel->lp;
             $log->datas = $datas;
             $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);
             $this->prodModel->sends()->add($log);

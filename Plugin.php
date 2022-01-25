@@ -81,12 +81,12 @@ class Plugin extends PluginBase
         });
 
         //Cette evenement permet d'ajouter au données de l'email les informations sur une clef unique d'identification.
-        Event::listen('waka.productor.subscribeData', function ($productor) {
+        Event::listen('waka.productor.subscribeData', function ($productorModel) {
             // trace_log($productor->getProductor()->use_key);
             // trace_log($productor->getProductor()->key_duration);
             // trace_log($productor->modelId);
-            if ($productor->getProductor()->use_key && $productor->getProductor()->key_duration && $productor->modelId) {
-                $logKey = new \Waka\Lp\Classes\LogKey($productor);
+            if ($productorModel->getProductor()->use_key && $productorModel->getProductor()->key_duration && $productorModel->modelId) {
+                $logKey = new \Waka\Lp\Classes\LogKey($productorModel);
                 $logKey->add();
                //trace_log($logKey->log->toArray());
                 return ['log' => $logKey->log];

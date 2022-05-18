@@ -17,21 +17,29 @@ class DataKey extends ComponentBase
 
     public function defineProperties()
     {
-        return [];
+        return [
+            'btn_color' => [
+                'title' => 'Couleur',
+                'description' => 'Couleur du bouton',
+                'default' => null,
+                'type' => 'string',
+            ],
+        ];
     }
 
     public function onRun()
     {
         $this->addJs('assets/js/waiter.js');
+        $dataFromKey = $this->getKeyData();
+        
+        $this->page['dataClientKey'] = $dataFromKey['key'];
+        $this->page['dataKey'] = $dataFromKey['dataKey'];
 
+    }
+
+    public function getKeyData() {
         $key = $this->param('key');
         $source = SourceLog::where('key', $key)->first();
-
-        // $user = BackendAuth::getUser();
-        // if (!$user) {
-        //     $source->increment('visites');
-        // }
-
         //
         if (!$source) {
             return Redirect::to('/lp/bad_cod');
@@ -45,7 +53,19 @@ class DataKey extends ComponentBase
             $source->visites = $source->visites + 1;
             $source->save();
         }
-        $this->page['dataClientKey'] = $key;
-        $this->page['dataKey'] = $source->send_targeteable;
+        return [
+            'key' => $key,
+            'dataKey' => $source->send_targeteable,
+        ];
+
     }
+    
+    public function onRemoveKey()
+        {
+            $key = $this->param('key');
+            $source = \Waka\Lp\Models\SourceLog::where('key', $key)->first();
+            $source->user_delete_key = true;
+            $source->save();
+            return \Redirect::to('/lp/deleted_cod');
+        }
 }

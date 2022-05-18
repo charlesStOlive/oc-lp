@@ -8,27 +8,20 @@ class LogKey
 {
     private $key;
     public $modelId;
-    public $prodModel;
+    public $productor;
     public $log;
     public $landingPage;
 
-    public function __construct($productorModel, $modelId = null)
+    public function __construct($productor, $modelId)
     {
-        if(!$modelId) {
-            //modelId par defaut est envoyé par les class productrices (Maier, Pdfer)
-            $this->modelId = $productorModel->modelId;
-            $this->prodModel = $productorModel->getProductor();
-        } else {
-            //Si création manuel d'un log key on instancie le model.
-            $this->modelId = $modelId;
-            $this->prodModel = $productorModel;
-            //On triche ici plutot que d'utilisr une class productrice on prend le modèle productor wakaMail plutot que Mailcreator...
-        }
+        //Si création manuel d'un log key on instancie le model.
+        $this->productor = $productor;
+        $this->modelId = $modelId;
+        //
         if(!$this->modelId) {
             throw new SystemException('Le modèle ID est inconnu lors de la création du logKey');
         }
-        
-        
+        //
         $existingLoadingKey = $this->existe();
         if ($existingLoadingKey) {
             $this->key = $existingLoadingKey->id;
@@ -54,43 +47,37 @@ class LogKey
 
     public function existe()
     {
-        $ds = \DataSources::find($this->prodModel->data_source);
+        
+        $ds = \DataSources::find($this->productor->data_source);
         return SourceLog::where('send_targeteable_id', $this->modelId)
             ->where('send_targeteable_type', $ds->class)
-            ->where('sendeable_type', get_class($this->prodModel))
-            ->where('sendeable_id', $this->prodModel->id)
-            ->where('landing_page', $this->prodModel->lp)
+            ->where('sendeable_type', get_class($this->productor))
+            ->where('sendeable_id', $this->productor->id)
+            ->where('landing_page', $this->productor->lp_data->url)
             ->where('user_delete_key', false)->get()->first();
     }
 
     public function add($datas = [])
     {
-        //trace_log("add fonction");
-        //trace_log($this->prodModel->data_source);
-        //trace_log($this->key);
-        //trace_log($datas);
-        //trace_log($this->getEndKeyAt($this->prodModel->key_duration));
-
-
         $existingLoadingKey = $this->existe();
-        
+        //
         if ($existingLoadingKey) {
-           //trace_log($existingLoadingKey->toArray());
             $log = $existingLoadingKey;
-            $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);
-            $log->landing_page = $this->prodModel->lp;
+            $log->end_key_at = $this->getEndKeyAt($this->productor->lp_data->key_duration);
+            $log->landing_page = $this->productor->lp_data->url;
             $log->save();
             $this->log = $log;
         } else {
-            $ds = \DataSources::find($this->prodModel->data_source);
+            //trace_log("clef a créer");
+            $ds = \DataSources::find($this->productor->data_source);
             $log = new \Waka\Lp\Models\SourceLog();
             $log->key = $this->key;
             $log->send_targeteable_id = $this->modelId;
             $log->send_targeteable_type = $ds->class;
-            $log->landing_page = $this->prodModel->lp;
+            $log->landing_page = $this->productor->lp_data->url;
             $log->datas = $datas;
-            $log->end_key_at = $this->getEndKeyAt($this->prodModel->key_duration);
-            $this->prodModel->sends()->add($log);
+            $log->end_key_at = $this->getEndKeyAt($this->productor->lp_data->key_duration);
+            $this->productor->sends()->add($log);
             $this->log = $log;
         }
     }
@@ -118,6 +105,9 @@ class LogKey
                 break;
             case '1Mo':
                 return $date->addMonth()->toDateTimeString();
+                break;
+            case '1t':
+                return $date->addMonth(3)->toDateTimeString();
                 break;
         }
     }

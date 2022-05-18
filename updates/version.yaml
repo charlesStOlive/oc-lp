@@ -8,3 +8,6 @@
 1.0.3:
     - ' Ajout des données dans wakamailto'
     - add_waka_mailtos_table_u103.php
+1.1.0:
+    - 'Nouveau moteur de LP'
+    - create_lp_datas_table.php

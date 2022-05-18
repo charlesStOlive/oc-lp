@@ -1,0 +1,15 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+        invisible: true
+    name:
+        label: waka.lp::lpdata.name
+        searchable: true
+    updated_at:
+        label: waka.utils::lang.global.updated_at
+        type: timetense

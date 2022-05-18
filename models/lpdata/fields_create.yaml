@@ -1,0 +1,22 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: waka.lp::lpdata.name
+        span: left
+        required: true
+    url:
+        label: waka.lp::lpdata.url
+        span: auto
+    use_key:
+        label: waka.lp::lpdata.use_key
+        span: auto
+        type: switch
+    key_duration:
+        label: waka.lp::lpdata.key_duration
+        span: auto
+        type: dropdown
+        placeholder: waka.utils::lang.global.placeholder
+        options: listDurations

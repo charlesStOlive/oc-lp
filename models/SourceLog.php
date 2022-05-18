@@ -95,6 +95,6 @@ class SourceLog extends Model
     }
 
     public function getLpUrlAttribute() {
-        return url('lp/'.$this->landing_page.'/'.$this->key);
+        return url($this->landing_page.'/'.$this->key);
     }
 }

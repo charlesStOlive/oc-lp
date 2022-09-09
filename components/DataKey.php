@@ -30,7 +30,28 @@ class DataKey extends ComponentBase
     public function onRun()
     {
         $this->addJs('assets/js/waiter.js');
-        $dataFromKey = $this->getKeyData();
+        
+
+        $key = $this->param('key');
+        $source = SourceLog::where('key', $key)->first();
+        //
+        if (!$source) {
+            return Redirect::to('/lp/bad_cod');
+        }
+        //
+        if (!$source->valide) {
+            return Redirect::to('/lp/deleted_cod');
+        }
+        $b_user = BackendAuth::getUser();
+        if (!$b_user) {
+            $source->visites = $source->visites + 1;
+            $source->save();
+        }
+        $dataFromKey = [
+            'key' => $key,
+            'dataKey' => $source->send_targeteable,
+        ];
+        
         
         $this->page['dataClientKey'] = $dataFromKey['key'];
         $this->page['dataKey'] = $dataFromKey['dataKey'];

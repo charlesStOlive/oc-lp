@@ -106,50 +106,50 @@ class Plugin extends PluginBase
 
     public function injectController($widget)
     {
-        $opt = \Config::get('waka.lp::durations');
-        if ($widget->isNested === true) {
-            return;
-        }
-        //On empeche l'affichage pour les sous widget des popups behaviors
-        if ($widget->alias == 'mailBehaviorformWidget') {
-            return;
-        }
-        if ($widget->alias == 'myduplicateformWidget') {
-            return;
-        }
-        if ($widget->alias == 'mailDataformWidget') {
-            return;
-        }
-        if ($widget->alias == 'sideBarUpdateformWidget') {
-            return;
-        }
-        if ($widget->context == 'create') {
-            return;
-        }
-        $widget->addTabFields([
-            'use_key' => [
-                'label' => Lang::get('waka.lp::lang.source_log.use_key'),
-                'tab' => 'waka.lp::lang.source_log.tab_lp',
-                'permissions' => ['waka.mailer.admin.super'],
-                'span' => 'auto',
-                'type' => 'switch',
-            ],
-            'key_duration' => [
-                'label' => Lang::get('waka.lp::lang.source_log.duration'),
-                'tab' => 'waka.lp::lang.source_log.tab_lp',
-                'span' => 'auto',
-                'type' => 'dropdown',
-                'permissions' => ['waka.mailer.admin.super'],
-                'options' => $opt,
-                'default' => '1w',
-            ],
-            'lp' => [
-                'label' => Lang::get('waka.lp::lang.source_log.lp'),
-                'tab' => 'waka.lp::lang.source_log.tab_lp',
-                'span' => 'full',
-                'permissions' => ['waka.mailer.admin.super'],
-            ],
-        ]);
+        // $opt = \Config::get('waka.lp::durations');
+        // if ($widget->isNested === true) {
+        //     return;
+        // }
+        // //On empeche l'affichage pour les sous widget des popups behaviors
+        // if ($widget->alias == 'mailBehaviorformWidget') {
+        //     return;
+        // }
+        // if ($widget->alias == 'myduplicateformWidget') {
+        //     return;
+        // }
+        // if ($widget->alias == 'mailDataformWidget') {
+        //     return;
+        // }
+        // if ($widget->alias == 'sideBarUpdateformWidget') {
+        //     return;
+        // }
+        // if ($widget->context == 'create') {
+        //     return;
+        // }
+        // $widget->addTabFields([
+        //     'use_key' => [
+        //         'label' => Lang::get('waka.lp::lang.source_log.use_key'),
+        //         'tab' => 'waka.lp::lang.source_log.tab_lp',
+        //         'permissions' => ['waka.mailer.admin.super'],
+        //         'span' => 'auto',
+        //         'type' => 'switch',
+        //     ],
+        //     'key_duration' => [
+        //         'label' => Lang::get('waka.lp::lang.source_log.duration'),
+        //         'tab' => 'waka.lp::lang.source_log.tab_lp',
+        //         'span' => 'auto',
+        //         'type' => 'dropdown',
+        //         'permissions' => ['waka.mailer.admin.super'],
+        //         'options' => $opt,
+        //         'default' => '1w',
+        //     ],
+        //     'lp' => [
+        //         'label' => Lang::get('waka.lp::lang.source_log.lp'),
+        //         'tab' => 'waka.lp::lang.source_log.tab_lp',
+        //         'span' => 'full',
+        //         'permissions' => ['waka.mailer.admin.super'],
+        //     ],
+        // ]);
     }
 
     /**
@@ -160,8 +160,8 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Waka\Lp\Components\GestionKey' => 'gestionKey',
-            'Waka\Lp\Components\DataKey' => 'dataKey',
+            // 'Waka\Lp\Components\GestionKey' => 'gestionKey',
+            // 'Waka\Lp\Components\DataKey' => 'dataKey',
         ];
     }
 

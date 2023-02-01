@@ -49,8 +49,9 @@ class LogKey
     {
         
         $ds = \DataSources::find($this->productor->data_source);
+        $targeteable = $this->checkMorphMap($ds->class, true);
         return SourceLog::where('send_targeteable_id', $this->modelId)
-            ->where('send_targeteable_type', $ds->class)
+            ->where('send_targeteable_type', $targeteable)//todoeable
             ->where('sendeable_type', get_class($this->productor))
             ->where('sendeable_id', $this->productor->id)
             ->where('landing_page', $this->productor->lp_data->url)
@@ -73,7 +74,7 @@ class LogKey
             $log = new \Waka\Lp\Models\SourceLog();
             $log->key = $this->key;
             $log->send_targeteable_id = $this->modelId;
-            $log->send_targeteable_type = $ds->class;
+            $log->send_targeteable_type = $this->checkMorphMap($ds->class, true); //todotargeteable
             $log->landing_page = $this->productor->lp_data->url;
             $log->datas = $datas;
             $log->end_key_at = $this->getEndKeyAt($this->productor->lp_data->key_duration);
@@ -110,5 +111,23 @@ class LogKey
                 return $date->addMonth(3)->toDateTimeString();
                 break;
         }
+    }
+
+    public function checkMorphMap($className, $name = false) {
+        if(!$className) return;
+        if (substr($className, 0, 1) === "\\") {
+            $className = substr($className, 1);
+        }
+        $morphClassMaps = \Winter\Storm\Database\Relations\Relation::morphMap();
+        foreach($morphClassMaps as $morphName=>$morphClass) {
+            // trace_log($morphClass ."  ==  ".$className."  ==  ".$morphName);
+            if($morphClass ==  $className)  {
+                return $name ? $morphName : $morphClass;
+            } else if($morphName ==  $className)  {
+                return $name ? $morphName : $morphClass;
+            } 
+           
+        }
+         return $className;
     }
 }
